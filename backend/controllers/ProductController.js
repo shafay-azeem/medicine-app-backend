@@ -58,3 +58,55 @@ exports.getAllProducts = asyncHandler(async (req, res, next) => {
         next(err);
     }
 });
+
+//get ALl Products --Get
+exports.updateProduct = asyncHandler(async (req, res, next) => {
+    let productId = req.params.prodId
+    const { productName, productDescription, productCategory, productType, productImg, productVideo } = req.body;
+    const newProductData = {
+        productName: productName,
+        productDescription: productDescription,
+        productCategory: productCategory,
+        productType: productType,
+        productImg: productImg,
+        productVideo: productVideo
+
+    };
+    try {
+        const product = await Product.findByIdAndUpdate(productId, newProductData, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false,
+        });
+        return res.status(200).json({
+            success: true,
+            product,
+            message: "Product Updated Successfuly"
+        });
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+});
+
+
+//get ALl Products --Get
+exports.getSingleProduct = asyncHandler(async (req, res, next) => {
+    let productId = req.params.prodId
+
+    try {
+        const product = await Product.findById(productId);
+        return res.status(200).json({
+            success: true,
+            product,
+            message: "Product Fetched Successfuly"
+        });
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+});
