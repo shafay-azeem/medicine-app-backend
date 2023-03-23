@@ -113,14 +113,18 @@ exports.getSingleProduct = asyncHandler(async (req, res, next) => {
 
 //get ALl Products --Get
 exports.deleteProduct = asyncHandler(async (req, res, next) => {
-    let productId = req.params.prodId
+    const productId = req.params.prodId
 
     try {
-        const product = await Product.findById(productId)
-
-
-        await product.remove();
-
+        let product
+        product = await Product.findById(productId);
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            });
+        }
+        product = await Product.findOneAndDelete({ _id: productId });
         return res.status(200).json({
             success: true,
             message: "Product deleted Successfuly"
