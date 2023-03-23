@@ -45,10 +45,10 @@ exports.getAllProducts = asyncHandler(async (req, res, next) => {
             error.statusCode = 404;
             throw error;
         }
-        return res.status(201).json({
+        return res.status(200).json({
             success: true,
             products,
-            message: "Product Created Successfully",
+            message: "Products Fetched Successfully",
 
         });
     } catch (err) {
