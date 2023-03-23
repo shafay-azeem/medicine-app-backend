@@ -35,7 +35,7 @@ exports.createProduct = asyncHandler(async (req, res, next) => {
 exports.getAllProducts = asyncHandler(async (req, res, next) => {
 
     try {
-        let products = Product.find()
+        let products = await Product.find().exec()
 
 
         if (!products) {
