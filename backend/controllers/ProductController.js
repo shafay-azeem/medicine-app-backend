@@ -30,3 +30,31 @@ exports.createProduct = asyncHandler(async (req, res, next) => {
         next(err);
     }
 });
+
+//get ALl Products --Get
+exports.getAllProducts = asyncHandler(async (req, res, next) => {
+
+    try {
+        let products = Product.find()
+
+
+        if (!products) {
+            const error = new Error(
+                "product not found"
+            );
+            error.statusCode = 404;
+            throw error;
+        }
+        return res.status(201).json({
+            success: true,
+            products,
+            message: "Product Created Successfully",
+
+        });
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+});
