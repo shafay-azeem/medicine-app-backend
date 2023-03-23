@@ -110,3 +110,23 @@ exports.getSingleProduct = asyncHandler(async (req, res, next) => {
         next(err);
     }
 });
+
+//get ALl Products --Get
+exports.deleteProduct = asyncHandler(async (req, res, next) => {
+    let productId = req.params.prodId
+
+    try {
+        const product = await Product.find().exec()
+        let updatedProducts = await Product.pull({ _id: product._id })
+        await updatedProducts.save()
+        return res.status(200).json({
+            success: true,
+            message: "Product deleted Successfuly"
+        });
+    } catch (err) {
+        if (!err.statusCode) {
+            err.statusCode = 500;
+        }
+        next(err);
+    }
+});
