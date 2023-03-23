@@ -117,7 +117,7 @@ exports.deleteProduct = asyncHandler(async (req, res, next) => {
 
     try {
         const product = await Product.find().exec()
-        let updatedProducts = await Product.pull({ _id: product._id })
+        let updatedProducts = product.pull({ _id: productId })
         await updatedProducts.save()
         return res.status(200).json({
             success: true,
