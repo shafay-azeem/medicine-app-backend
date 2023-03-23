@@ -97,7 +97,7 @@ exports.getSingleProduct = asyncHandler(async (req, res, next) => {
     let productId = req.params.prodId
 
     try {
-        const product = await Product.findById(productId);
+        const product = await Product.findById(mongoose.Types.ObjectId(productId));
         return res.status(200).json({
             success: true,
             product,
